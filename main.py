@@ -194,4 +194,11 @@ async def resumo():
         "total_geral": total_geral
     }
 
+@app.delete("/limpar_servicos")
+async def limpar_servicos():
+    query = servicos.delete()
+    await database.execute(query)
+    return {"mensagem": "Todos os serviços foram apagados"}
+
+
 
