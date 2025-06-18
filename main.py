@@ -200,5 +200,37 @@ async def limpar_servicos():
     await database.execute(query)
     return {"mensagem": "Todos os serviços foram apagados"}
 
+@app.post("/popula_servicos_fixos")
+async def popula_servicos_fixos():
+    servicos_predefinidos = [
+        # Março
+        {"data": "21-03-2025", "local": "Solar", "hora": "17:45", "subcategorias": ["Jantar", "Fim"], "preco": 110.0, "realizado": True, "pago": True},
+        {"data": "23-03-2025", "local": "Solar", "hora": "12:30", "subcategorias": ["Chegada", "Almoço"], "preco": 38.0, "realizado": True, "pago": True},
+        {"data": "25-03-2025", "local": "Solar", "hora": "12:30", "subcategorias": ["Chegada", "Bolo"], "preco": 95.0, "realizado": True, "pago": True},
+        {"data": "29-03-2025", "local": "Lago", "hora": "09:30", "subcategorias": ["Montagem", "Aperitivo"], "preco": 90.0, "realizado": True, "pago": True},
+        # Abril
+        {"data": "04-04-2025", "local": "Lago", "hora": "15:00", "subcategorias": ["Aperitivo", "Bolo"], "preco": 80.0, "realizado": True, "pago": True},
+        {"data": "05-04-2025", "local": "Lago", "hora": "08:00", "subcategorias": ["Montagem", "Aperitivo"], "preco": 90.0, "realizado": True, "pago": True},
+        {"data": "19-04-2025", "local": "Lago", "hora": "14:00", "subcategorias": ["Aperitivo", "Bolo"], "preco": 80.0, "realizado": True, "pago": True},
+        {"data": "24-04-2025", "local": "Lago", "hora": "18:00", "subcategorias": ["Jantar", "Fim"], "preco": 110.0, "realizado": True, "pago": True},
+        {"data": "27-04-2025", "local": "Lago", "hora": "18:15", "subcategorias": ["Jantar", "Fim"], "preco": 110.0, "realizado": True, "pago": True},
+        {"data": "28-04-2025", "local": "Lago", "hora": "14:30", "subcategorias": ["Aperitivo", "Bolo"], "preco": 80.0, "realizado": True, "pago": True},
+    ]
+
+    for servico in servicos_predefinidos:
+        query = servicos.insert().values(
+            data=servico["data"],
+            local=servico["local"],
+            hora=servico["hora"],
+            subcategorias=",".join(servico["subcategorias"]),
+            preco=servico["preco"],
+            realizado=servico["realizado"],
+            pago=servico["pago"],
+        )
+        await database.execute(query)
+
+    return {"mensagem": "Serviços fixos adicionados com sucesso"}
+
+
 
 
